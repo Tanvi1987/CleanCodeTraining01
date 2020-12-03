@@ -120,7 +120,7 @@ class InputOutput {
         try {
             numInput = in.nextInt();
         } catch (InputMismatchException e) {
-            in.nextLine()
+            in.nextLine();
             DisplayInputTypeError();
         }
         return numInput;
