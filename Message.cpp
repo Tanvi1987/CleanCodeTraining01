@@ -1,6 +1,3 @@
-/*  Assignment was to clean the file at https://github.com/getmubarak/design/blob/master/p21/Message.java
-*/
-
 #include <string>
 #include <iostream>
 
@@ -13,10 +10,10 @@ public:
     virtual string decrypt(const string& data) = 0;
 };
 
-class AesEncryptionAlgorithm : public EncryptionAlgorithm
+class AesEncryptionAlgorithm final : public EncryptionAlgorithm
 {
 public:
-    virtual string encrypt(const string& data)
+    string encrypt(const string& data)
     {
         cout << "Encrypting data using AES algorithm" << endl;
         /*Code to encrypt data using AES algorithm*/
@@ -31,17 +28,17 @@ public:
     }
 };
 
-class BlowfishEncryptionAlgorithm : public EncryptionAlgorithm
+class BlowfishEncryptionAlgorithm final : public EncryptionAlgorithm
 {
 public:
-    virtual string encrypt(const string& data)
+    string encrypt(const string& data)
     {
         cout << "Encrypting data using Blowfish algorithm";
         /*Code to encrypt data using Blowfish algorithm*/
         return "Blowfish";
     }
 
-    virtual string decrypt(const string& data)
+    string decrypt(const string& data)
     {
         cout << "Decrypting cipher using Blowfish algorithm";
         /*Code to decrypt data using Blowfish algorithm*/
