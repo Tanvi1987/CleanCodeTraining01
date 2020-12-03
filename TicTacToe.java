@@ -118,8 +118,9 @@ class InputOutput {
     public int GetInputSlotNumber() { // TODO - Magic number -1 for failure
         int numInput = -1;
         try {
-            numInput = in .nextInt();
+            numInput = in.nextInt();
         } catch (InputMismatchException e) {
+            in.nextLine()
             DisplayInputTypeError();
         }
         return numInput;
