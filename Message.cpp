@@ -20,7 +20,7 @@ public:
         return "Aes";
     }
 
-    virtual string decrypt(const string& data)
+    string decrypt(const string& data)
     {
         cout << "Decrypting cipher using AES algorithm" << endl;
         /*Code to decrypt data using AES algorithm*/
