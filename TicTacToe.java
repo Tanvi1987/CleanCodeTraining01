@@ -11,7 +11,7 @@ class Board {
 
     public int SIZE = 9;
     public int ROWS = 3;
-    public String[] board; // TODO - public breaking abstraction .
+    public String[] board; // TODO - public breaking abstraction . Used from outside
 
     public int NUM_WINS = 8;
     private int[][] winCombinations = {
@@ -32,10 +32,10 @@ class Board {
         }
     }
 
-    public String GetNthWinCombination(int a) {
+    public String GetNthWinCombination(int n) {
         String line = "";
         for (int i = 0; i < ROWS; ++i) {
-            line += board[winCombinations[a][i]];
+            line += board[winCombinations[n][i]];
         }
         return line;
     }
@@ -72,13 +72,13 @@ class InputOutput {
 
     private Scanner in ;
 
-    public InputOutput() { in = new Scanner(System.in);
+    public InputOutput() { 
+      in = new Scanner(System.in);
     }
 
     public void DisplayBoard(Board board1) {
 
         System.out.println("/---|---|---\\");
-
         for (int i = 0, k = 0; i < board1.ROWS; ++i) {
             for (int j = 0; j < board1.ROWS; ++j, ++k) {
                 System.out.print("| " + board1.board[k] + " ");
@@ -88,7 +88,7 @@ class InputOutput {
         }
     }
 
-    public void PrintWelcomeMessage(Board board1) { // TODO - Tight coupling
+    public void DisplayWelcomeMessage(Board board1) { 
         System.out.println("Welcome to 2 Player Tic Tac Toe.");
         System.out.println("--------------------------------");
         DisplayBoard(board1); // TODO - Tight coupling
@@ -111,7 +111,7 @@ class InputOutput {
         System.out.println("Slot already taken; re-enter slot number:");
     }
 
-    public void PrintDraw() {
+    public void DisplayDraw() {
         System.out.println("It's a draw! Thanks for playing.");
     }
 
@@ -125,7 +125,7 @@ class InputOutput {
         return numInput;
     }
 
-    public void PrintWinner(GameState winnerState) {
+    public void DisplayWinner(GameState winnerState) {
         String winner;
         if (winnerState == GameState.xWon)
             winner = "X";
@@ -197,14 +197,14 @@ class TicTacToeGame {
 
     public void DisplayGameOver() {
         if (mState == GameState.draw) {
-            io.PrintDraw();
+            io.DisplayDraw();
         } else if (mState == GameState.xWon || mState == GameState.oWon) {
-            io.PrintWinner(mState);
+            io.DisplayWinner(mState);
         }
     }
 
     public void PlayGame() {
-        io.PrintWelcomeMessage(mBoard);
+        io.DisplayWelcomeMessage(mBoard);
         while (mState == GameState.inProgress) {
             int numInput = GetValidInput(turn);
             mBoard.board[numInput - 1] = turn;
