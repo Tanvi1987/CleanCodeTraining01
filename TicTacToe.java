@@ -8,138 +8,135 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Board {
-    
-    public int SIZE = 9; 
+
+    public int SIZE = 9;
     public int ROWS = 3;
     public String[] board; // TODO - public breaking abstraction .
 
     public int NUM_WINS = 8;
-    private int[][] winCombinations = { 
-    	{0,1,2},
-    	{3,4,5},
-    	{6,7,8},
-    	{0,3,6},
-    	{1,4,7},
-    	{2,5,8},
-    	{0,4,8},
-    	{2,4,6}
+    private int[][] winCombinations = {
+        { 0, 1, 2 },
+        { 3, 4, 5 },
+        { 6, 7, 8 },
+        { 0, 3, 6 },
+        { 1, 4, 7 },
+        { 2, 5, 8 },
+        { 0, 4, 8 },
+        { 2, 4, 6 }
     };
 
     public Board() {
-        	board = new String[SIZE];
-		for (int a = 0; a < SIZE; a++) {
-			board[a] = String.valueOf(a+1);
-		}
-	}
-	
-	public String GetNthWinCombination(int a) {	
-		String line = "";
-		for (int i = 0; i < ROWS ; ++i ) {
-			line += board[ winCombinations[a][i] ];
-		}
-		return line;		
-	}
+        board = new String[SIZE];
+        for (int a = 0; a < SIZE; a++) {
+            board[a] = String.valueOf(a + 1);
+        }
+    }
 
-	public boolean isSlotVacant(int slotNumber) { 
-		return board[slotNumber-1].equals(String.valueOf(slotNumber)); 
-	}
-	
-	public boolean isValidSlot(int slotNumber) { 
-		return 0 >= slotNumber && slotNumber < SIZE; 
-	} 
+    public String GetNthWinCombination(int a) {
+        String line = "";
+        for (int i = 0; i < ROWS; ++i) {
+            line += board[winCombinations[a][i]];
+        }
+        return line;
+    }
 
-	public int countEmptySlots() {
-	    	int count = 0;
-		for (int a = 0; a < SIZE; a++) {
-			if ( isSlotVacant(a+1) ) count++;
-		}
-		return count;
-	}
+    public boolean isSlotVacant(int slotNumber) {
+        return board[slotNumber - 1].equals(String.valueOf(slotNumber));
+    }
 
-    	public boolean hasEmptySlot() { 
-    		return countEmptySlots() >= 1; 
+    public boolean isValidSlot(int slotNumber) {
+        return 0 >= slotNumber && slotNumber < SIZE;
+    }
+
+    public int countEmptySlots() {
+        int count = 0;
+        for (int a = 0; a < SIZE; a++) {
+            if (isSlotVacant(a + 1)) count++;
+        }
+        return count;
+    }
+
+    public boolean hasEmptySlot() {
+        return countEmptySlots() >= 1;
     }
 };
 
-enum GameState { 
-    inProgress ,
+enum GameState {
+    inProgress,
     draw,
     xWon,
     oWon
 }
 
 class InputOutput {
-    
-    private Scanner in;
-    
-    public InputOutput() { 
-    	in = new Scanner(System.in); 
-    }
-    
-    public void DisplayBoard(Board board1) {
-		
-	System.out.println("/---|---|---\\");
-        
-        for ( int i =0 , k=0; i < board1.ROWS ; ++i)
-        {
-            for ( int j=0 ; j < board1.ROWS ; ++j, ++k )
-            {
-                System.out.print("| " + board1.board[k]+" ");
-            }
-    		System.out.println("|");
-    		System.out.println("|-----------|");
-        }
-    }
-    
-    public void PrintWelcomeMessage (Board board1) { // TODO - Tight coupling
-		System.out.println("Welcome to 2 Player Tic Tac Toe.");
-		System.out.println("--------------------------------");
-		DisplayBoard(board1); // TODO - Tight coupling
-		System.out.println("X's will play first. ");        
+
+    private Scanner in ;
+
+    public InputOutput() { in = new Scanner(System.in);
     }
 
-    public void DisplayInputPrompt(String turn) { 
-    	System.out.println(turn + "'s turn; enter a slot number to place " + turn + " in : "); 
+    public void DisplayBoard(Board board1) {
+
+        System.out.println("/---|---|---\\");
+
+        for (int i = 0, k = 0; i < board1.ROWS; ++i) {
+            for (int j = 0; j < board1.ROWS; ++j, ++k) {
+                System.out.print("| " + board1.board[k] + " ");
+            }
+            System.out.println("|");
+            System.out.println("|-----------|");
+        }
     }
-    
-    public void DisplayInputTypeError() { 
-    	System.out.println("Invalid input; re-enter slot number : "); 
-	}
-    
-    public void DisplayInputRangeError(int size) { 
-    	System.out.println("Invalid input; re-enter slot number between 1 to " + size + " : " ); 
+
+    public void PrintWelcomeMessage(Board board1) { // TODO - Tight coupling
+        System.out.println("Welcome to 2 Player Tic Tac Toe.");
+        System.out.println("--------------------------------");
+        DisplayBoard(board1); // TODO - Tight coupling
+        System.out.println("X's will play first. ");
     }
-    
-    public void DisplayNonEmptySlotError() { 
-    	System.out.println("Slot already taken; re-enter slot number:"); 
+
+    public void DisplayInputPrompt(String turn) {
+        System.out.println(turn + "'s turn; enter a slot number to place " + turn + " in : ");
     }
-    
-    public void PrintDraw() { 
-    	System.out.println("It's a draw! Thanks for playing."); 
-	}
+
+    public void DisplayInputTypeError() {
+        System.out.println("Invalid input; re-enter slot number : ");
+    }
+
+    public void DisplayInputRangeError(int size) {
+        System.out.println("Invalid input; re-enter slot number between 1 to " + size + " : ");
+    }
+
+    public void DisplayNonEmptySlotError() {
+        System.out.println("Slot already taken; re-enter slot number:");
+    }
+
+    public void PrintDraw() {
+        System.out.println("It's a draw! Thanks for playing.");
+    }
 
     public int GetInputSlotNumber() { // TODO - Magic number -1 for failure
         int numInput = -1;
         try {
-		numInput = in.nextInt();
-	} catch (InputMismatchException e) {
-		DisplayInputTypeError();
-    	}
+            numInput = in .nextInt();
+        } catch (InputMismatchException e) {
+            DisplayInputTypeError();
+        }
         return numInput;
     }
-    
-    public void PrintWinner(GameState winnerState) { 
+
+    public void PrintWinner(GameState winnerState) {
         String winner;
-        if ( winnerState == GameState.xWon ) 
-        	winner = "X"; 
-        else 
-        	winner = "O";
-        System.out.println("Congratulations! " + winner + "'s have won! Thanks for playing."); 
-        
+        if (winnerState == GameState.xWon)
+            winner = "X";
+        else
+            winner = "O";
+        System.out.println("Congratulations! " + winner + "'s have won! Thanks for playing.");
+
     }
 };
 
-class TicTacToeGame{
+class TicTacToeGame {
 
     private InputOutput io;
     private Board mBoard;
@@ -152,80 +149,77 @@ class TicTacToeGame{
         mState = GameState.inProgress;
         turn = "X";
     }
-    
-    private void toggleTurn()
-    {
+
+    private void toggleTurn() {
         if (turn.equals("X")) {
-    		turn = "O";
-    	} else {
-    	    turn = "X";
-    	}
-    }
-    
-    private void checkWinner(){
-        
-        if ( mState != GameState.inProgress) return;
-
-		for ( int a = 0; a < mBoard.NUM_WINS && mState == GameState.inProgress ; ++a) {
-			String line = mBoard.GetNthWinCombination(a);
-			
-			if (line.equals("XXX")) {
-			    mState = GameState.xWon;
-			} else if (line.equals("OOO")) {
-				mState = GameState.oWon;
-		    }
-		}
-
-		if ( mState == GameState.inProgress && ! mBoard.hasEmptySlot() ) {
-    		mState = GameState.draw;
-		}
-    }
-    
-    private int GetValidInput(String turn)
-    {
-        int numInput = -1;
-		io.DisplayInputPrompt(turn);
-        while ( true )
-        {
-			numInput = io.GetInputSlotNumber();
-			if ( mBoard.isValidSlot(numInput) ) {
-				io.DisplayInputRangeError(mBoard.SIZE);
-				continue;
-			}
-			if (! mBoard.isSlotVacant(numInput) ) {
-				io.DisplayNonEmptySlotError();
-				continue; 
-			}
-			break;
+            turn = "O";
+        } else {
+            turn = "X";
         }
-        return numInput;        
     }
-    
-    public void DisplayGameOver(){
- 		if (mState == GameState.draw) {
-			io.PrintDraw();
-		} else if (mState == GameState.xWon || mState == GameState.oWon) {
-			io.PrintWinner(mState);
-		}          
+
+    private void checkWinner() {
+
+        if (mState != GameState.inProgress) return;
+
+        for (int a = 0; a < mBoard.NUM_WINS && mState == GameState.inProgress; ++a) {
+            String line = mBoard.GetNthWinCombination(a);
+
+            if (line.equals("XXX")) {
+                mState = GameState.xWon;
+            } else if (line.equals("OOO")) {
+                mState = GameState.oWon;
+            }
+        }
+
+        if (mState == GameState.inProgress && !mBoard.hasEmptySlot()) {
+            mState = GameState.draw;
+        }
     }
-    
-    public void PlayGame(){
+
+    private int GetValidInput(String turn) {
+        int numInput = -1;
+        io.DisplayInputPrompt(turn);
+        while (true) {
+            numInput = io.GetInputSlotNumber();
+            if (mBoard.isValidSlot(numInput)) {
+                io.DisplayInputRangeError(mBoard.SIZE);
+                continue;
+            }
+            if (!mBoard.isSlotVacant(numInput)) {
+                io.DisplayNonEmptySlotError();
+                continue;
+            }
+            break;
+        }
+        return numInput;
+    }
+
+    public void DisplayGameOver() {
+        if (mState == GameState.draw) {
+            io.PrintDraw();
+        } else if (mState == GameState.xWon || mState == GameState.oWon) {
+            io.PrintWinner(mState);
+        }
+    }
+
+    public void PlayGame() {
         io.PrintWelcomeMessage(mBoard);
-		while (mState == GameState.inProgress) {
-			int numInput = GetValidInput(turn) ;
-			mBoard.board[numInput-1] = turn;
+        while (mState == GameState.inProgress) {
+            int numInput = GetValidInput(turn);
+            mBoard.board[numInput - 1] = turn;
             toggleTurn();
-			io.DisplayBoard(mBoard);
-			checkWinner();
-		}
+            io.DisplayBoard(mBoard);
+            checkWinner();
+        }
         DisplayGameOver();
     }
-    
+
 }
 
 public class Main {
-	public static void main(String[] args) {
-	    TicTacToeGame game = new TicTacToeGame();
-	    game.PlayGame();
-	}
+    public static void main(String[] args) {
+        TicTacToeGame game = new TicTacToeGame();
+        game.PlayGame();
+    }
 }
