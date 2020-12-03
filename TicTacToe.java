@@ -26,13 +26,13 @@ class Board {
     };
 
     public Board() {
-        board = new String[SIZE];
+        	board = new String[SIZE];
 		for (int a = 0; a < SIZE; a++) {
 			board[a] = String.valueOf(a+1);
 		}
 	}
 	
-	public String GetNthWinCombination(int a){	
+	public String GetNthWinCombination(int a) {	
 		String line = "";
 		for (int i = 0; i < ROWS ; ++i ) {
 			line += board[ winCombinations[a][i] ];
@@ -49,15 +49,15 @@ class Board {
 	} 
 
 	public int countEmptySlots() {
-	    int count = 0;
+	    	int count = 0;
 		for (int a = 0; a < SIZE; a++) {
 			if ( isSlotVacant(a+1) ) count++;
 		}
 		return count;
 	}
 
-    public boolean hasEmptySlot() { 
-    	return countEmptySlots() >= 1; 
+    	public boolean hasEmptySlot() { 
+    		return countEmptySlots() >= 1; 
     }
 };
 
@@ -78,7 +78,7 @@ class InputOutput {
     
     public void DisplayBoard(Board board1) {
 		
-		System.out.println("/---|---|---\\");
+	System.out.println("/---|---|---\\");
         
         for ( int i =0 , k=0; i < board1.ROWS ; ++i)
         {
@@ -86,7 +86,7 @@ class InputOutput {
             {
                 System.out.print("| " + board1.board[k]+" ");
             }
-    		System.out.println(" |");
+    		System.out.println("|");
     		System.out.println("|-----------|");
         }
     }
@@ -121,9 +121,9 @@ class InputOutput {
     public int GetInputSlotNumber() { // TODO - Magic number -1 for failure
         int numInput = -1;
         try {
-			numInput = in.nextInt();
-		} catch (InputMismatchException e) {
-			DisplayInputTypeError();
+		numInput = in.nextInt();
+	} catch (InputMismatchException e) {
+		DisplayInputTypeError();
     	}
         return numInput;
     }
