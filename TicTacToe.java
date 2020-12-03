@@ -45,7 +45,7 @@ class Board {
     }
 
     public boolean isValidSlot(int slotNumber) {
-        return 0 >= slotNumber && slotNumber < SIZE;
+        return 0 < slotNumber && slotNumber <= SIZE;
     }
 
     public int countEmptySlots() {
@@ -182,7 +182,7 @@ class TicTacToeGame {
         io.DisplayInputPrompt(turn);
         while (true) {
             numInput = io.GetInputSlotNumber();
-            if (mBoard.isValidSlot(numInput)) {
+            if (!mBoard.isValidSlot(numInput)) {
                 io.DisplayInputRangeError(mBoard.SIZE);
                 continue;
             }
